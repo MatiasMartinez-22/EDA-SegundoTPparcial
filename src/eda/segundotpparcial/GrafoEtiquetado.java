@@ -12,6 +12,8 @@ import java.util.ArrayList;
  */
 public class GrafoEtiquetado {
      private Camino[][] matrizCamino;
+     private Camino[][] matrizCaminoDistancia;
+
     private int maxCiudad; //maximo de ciudades que ingrese el usuario
     private int numCiudad; //cantidad de ciudades que ingrese el usuario
     private boolean dirigido;
@@ -278,7 +280,7 @@ public class GrafoEtiquetado {
         int minValor = Integer.MAX_VALUE;
         int minIndice = -1;
         for (int nodo : T) {
-            if (D[nodo].getDistancia() < minValor) {
+            if (D[nodo].getDistancia() < minValor ) {
                 minValor = D[nodo].getDistancia();
                 minIndice = nodo;
             }

@@ -49,7 +49,7 @@ public class EDASegundoTPparcial {
          grafoEtiquetado.mostrarMatriz();
 
         
-         
+         grafoEtiquetado.dijkstra(2);
          
     }
     
