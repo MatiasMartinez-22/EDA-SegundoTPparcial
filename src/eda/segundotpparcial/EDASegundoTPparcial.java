@@ -1,22 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
+
 package eda.segundotpparcial;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Matias
- */
+
 public class EDASegundoTPparcial {
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
-        // TODO code application logic here
+        
         
          GrafoEtiquetado grafoEtiquetado = new GrafoEtiquetado(5, 4, false);
         //0, 1, 2, 3
@@ -27,12 +19,12 @@ public class EDASegundoTPparcial {
         Ciudad cityVm =new Ciudad("Vm");
         Ciudad citySl =new Ciudad("Sl");
         
-        ArrayList <Ciudad> saberCiudad=new ArrayList <Ciudad> ();
-        
-        saberCiudad.add(cityBuenosAires);
-        saberCiudad.add(cityBuenosAires);
-        saberCiudad.add(cityBuenosAires);
-        saberCiudad.add(cityBuenosAires);
+//        ArrayList <Ciudad> saberCiudad=new ArrayList <Ciudad> ();
+//        
+//        saberCiudad.add(cityBuenosAires);
+//        saberCiudad.add(cityBuenosAires);
+//        saberCiudad.add(cityBuenosAires);
+//        saberCiudad.add(cityBuenosAires);
         
         
         Camino camino= new Camino(cityBuenosAires, 10, 2);
@@ -46,8 +38,9 @@ public class EDASegundoTPparcial {
         grafoEtiquetado.agregarArco(3, 1, camino3);
         grafoEtiquetado.agregarArco(3, 2, camino4);
         
-         grafoEtiquetado.mostrarMatriz();
+        grafoEtiquetado.mostrarMatriz();
 
+        grafoEtiquetado.dijkstra(3); // Desde ciudad 0 (A)
         
          grafoEtiquetado.dijkstra(2);
          
