@@ -232,6 +232,7 @@ public class GrafoEtiquetado {
     }
     
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      public void dijkstra(int origen) {
         Camino[] D = new Camino[4]; // distancias mínimas
         boolean[] visitado = new boolean[4];
@@ -332,6 +333,65 @@ public class GrafoEtiquetado {
 >>>>>>> Stashed changes
         }
     }
+=======
+   public void dijkstra(int origen) {
+    int[] distancias = new int[numCiudad]; // distancias mínimas desde el origen
+    boolean[] visitado = new boolean[numCiudad]; // si ya visité ese nodo
+    int[] anterior = new int[numCiudad]; // para guardar el camino
+
+    // Inicializar
+    for (int i = 0; i < numCiudad; i++) {
+        distancias[i] = Integer.MAX_VALUE; // infinito
+        visitado[i] = false;
+        anterior[i] = -1; // sin previo
+    }
+
+     distancias[origen] = 0; // distancia desde el origen a sí mismo es 0
+
+    for (int i = 0; i < numCiudad - 1; i++) {
+        // Elegir el nodo no visitado con menor distancia
+        int u = -1;
+        int minDistancia = Integer.MAX_VALUE;
+
+        for (int j = 0; j < numCiudad; j++) {
+            if (!visitado[j] && distancias[j] < minDistancia) {
+                u = j;
+                minDistancia = distancias[j];
+            }
+        }
+
+        if (u == -1) break; // si no se encontró, corto
+
+        visitado[u] = true;
+
+        // Actualizar las distancias de los vecinos de u
+        for (int v = 0; v < numCiudad; v++) {
+            Camino camino = matriz[u][v];
+            if (camino != null && !visitado[v]) {
+                int nuevaDistancia = distancias[u] + camino.getDistancia();
+                if (nuevaDistancia < distancias[v]) {
+                    distancias[v] = nuevaDistancia;
+                    anterior[v] = u;
+                }
+            }
+        }
+    }
+
+    // Mostrar resultados
+    System.out.println("Distancias mínimas desde la ciudad " + origen + ":");
+    for (int i = 0; i < numCiudad; i++) {
+        if (distancias[i] == Integer.MAX_VALUE) {
+            System.out.println("Ciudad " + i + " es inalcanzable");
+        } else {
+            System.out.print("Ciudad " + i + " - Distancia: " + distancias[i] + " km");
+
+            // Mostrar el camino
+            System.out.print(" - Camino: ");
+            mostrarCamino(anterior, i);
+            System.out.println();
+        }
+    }
+>>>>>>> Stashed changes
 }
      
      
