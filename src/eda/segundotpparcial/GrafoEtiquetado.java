@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author Matias
  */
 public class GrafoEtiquetado {
-     private Camino matriz[][];
+     private Camino[][] matrizCamino;
     private int maxCiudad; //maximo de ciudades que ingrese el usuario
     private int numCiudad; //cantidad de ciudades que ingrese el usuario
     private boolean dirigido;
@@ -34,11 +34,11 @@ public class GrafoEtiquetado {
         this.maxCiudad = maxVertices;
         this.numCiudad = numVertices;
         //La matriz por defecto tiene sus posiciones en falso
-        this.matriz = new Camino[maxVertices][maxVertices];
+        this.matrizCamino = new Camino[maxVertices][maxVertices];
         for (int i = 0; i < maxVertices; i++) {
 
             for (int j = 0; j < maxVertices; j++) {
-                matriz[i][j] = null;
+                matrizCamino[i][j] = null;
             }
 
         }
@@ -76,11 +76,11 @@ public class GrafoEtiquetado {
         }
 
         //establecemos la posicion i j en representacion de una arista (union de vertice i --> j) en true
-        matriz[i][j] = etiqueta;
+        matrizCamino[i][j] = etiqueta;
 
         //Si el grafo es NO dirigido i---j es lo mismo que j---i
         if (!dirigido) {
-            matriz[j][i] = etiqueta;
+            matrizCamino[j][i] = etiqueta;
         }
     }
 
@@ -91,7 +91,7 @@ public class GrafoEtiquetado {
         if (!comprobarVertice(j)) {
             throw new IllegalArgumentException("El vertice " + j + " no existe");
         }
-        return matriz[i][j];
+        return matrizCamino[i][j];
     }
 
     public void eliminarArco(int i, int j) {
@@ -104,11 +104,11 @@ public class GrafoEtiquetado {
         }
 
         //establecemos la posicion i j en representacion de una arista (union de vertice i --> j) en true
-        matriz[i][j] = null;
+        matrizCamino[i][j] = null;
 
         //Si el grafo es NO dirigido i---j es lo mismo que j---i
         if (!dirigido) {
-            matriz[j][i] = null;
+            matrizCamino[j][i] = null;
         }
     }
 
@@ -232,26 +232,26 @@ public class GrafoEtiquetado {
         for (int i = 0; i < numCiudad; i++) {
             System.out.printf("%2d |", i);
             for (int j = 0; j < numCiudad; j++) {
-                System.out.print(" " + (matriz[i][j]) + " ");
+                System.out.print(" " + (matrizCamino[i][j]) + " ");
             }
             System.out.println();
         }
     }
     
      public void dijkstra(int origen) {
-        int[] D = new int[numCiudades]; // distancias mínimas
-        boolean[] visitado = new boolean[numCiudades];
+        Camino[] D = new Camino[4]; // distancias mínimas
+        boolean[] visitado = new boolean[4];
         ArrayList<Integer> T = new ArrayList<>();
 
         // Inicializamos las distancias
-        for (int i = 0; i < numCiudades; i++) {
-            D[i] = matrizDistancias[origen][i];
+        for (int i = 0; i < 4; i++) {
+            D[i] = matrizCamino[origen][i];
             if (i != origen) {
                 T.add(i); // Agregamos todos menos el origen a T
             }
         }
 
-        D[origen] = 0;
+        D[origen] = null;
         visitado[origen] = true;
 
         while (!T.isEmpty()) {
@@ -260,25 +260,26 @@ public class GrafoEtiquetado {
             visitado[v] = true;
 
             for (int z : T) {
-                if (matrizDistancias[v][z] != Integer.MAX_VALUE && D[z] > D[v] + matrizDistancias[v][z]) {
-                    D[z] = D[v] + matrizDistancias[v][z];
+                if (matrizCamino[v][z].getDistancia() != Integer.MAX_VALUE && D[z].getDistancia() > D[v].getDistancia() + matrizCamino[v][z].getDistancia()) {
+//                    D[z]. = D[v].getDistancia() + matrizCamino[v][z].getDistancia();
+                     D[z].setDistancia( D[v].getDistancia() + matrizCamino[v][z].getDistancia());
                 }
             }
         }
 
         // Mostrar resultados
         System.out.println("Distancias mínimas desde ciudad " + origen + ":");
-        for (int i = 0; i < numCiudades; i++) {
-            System.out.println("→ Ciudad " + i + ": " + (D[i] == Integer.MAX_VALUE ? "∞" : D[i]));
+        for (int i = 0; i < 4; i++) {
+            System.out.println("→ Ciudad " + i + ": " + (D[i].getDistancia() == Integer.MAX_VALUE ? "∞" : D[i]));
         }
     }
 
-     private int indiceMinimo(int[] D, ArrayList<Integer> T) {
+     private int indiceMinimo(Camino[] D, ArrayList<Integer> T) {
         int minValor = Integer.MAX_VALUE;
         int minIndice = -1;
         for (int nodo : T) {
-            if (D[nodo] < minValor) {
-                minValor = D[nodo];
+            if (D[nodo].getDistancia() < minValor) {
+                minValor = D[nodo].getDistancia();
                 minIndice = nodo;
             }
         }
