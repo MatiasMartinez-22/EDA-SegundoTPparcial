@@ -237,5 +237,53 @@ public class GrafoEtiquetado {
             System.out.println();
         }
     }
+    
+     public void dijkstra(int origen) {
+        int[] D = new int[numCiudades]; // distancias mínimas
+        boolean[] visitado = new boolean[numCiudades];
+        ArrayList<Integer> T = new ArrayList<>();
+
+        // Inicializamos las distancias
+        for (int i = 0; i < numCiudades; i++) {
+            D[i] = matrizDistancias[origen][i];
+            if (i != origen) {
+                T.add(i); // Agregamos todos menos el origen a T
+            }
+        }
+
+        D[origen] = 0;
+        visitado[origen] = true;
+
+        while (!T.isEmpty()) {
+            int v = indiceMinimo(D, T);
+            T.remove(Integer.valueOf(v));
+            visitado[v] = true;
+
+            for (int z : T) {
+                if (matrizDistancias[v][z] != Integer.MAX_VALUE && D[z] > D[v] + matrizDistancias[v][z]) {
+                    D[z] = D[v] + matrizDistancias[v][z];
+                }
+            }
+        }
+
+        // Mostrar resultados
+        System.out.println("Distancias mínimas desde ciudad " + origen + ":");
+        for (int i = 0; i < numCiudades; i++) {
+            System.out.println("→ Ciudad " + i + ": " + (D[i] == Integer.MAX_VALUE ? "∞" : D[i]));
+        }
+    }
+
+     private int indiceMinimo(int[] D, ArrayList<Integer> T) {
+        int minValor = Integer.MAX_VALUE;
+        int minIndice = -1;
+        for (int nodo : T) {
+            if (D[nodo] < minValor) {
+                minValor = D[nodo];
+                minIndice = nodo;
+            }
+        }
+        return minIndice;
+    }
+    
 
 }
