@@ -1,13 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package eda.segundotpparcial;
 
-/**
- *
- * @author Matias
- */
+
 public class Camino {
     
     private Ciudad ciudad;
@@ -18,6 +12,10 @@ public class Camino {
         this.ciudad = ciudad;
         this.distancia = distancia;
         this.capacidad = capacidad;
+    }
+    
+    public Camino (int distancia){
+    this.distancia= distancia;
     }
 
     public Ciudad getCiudad() {
