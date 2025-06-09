@@ -4,28 +4,16 @@ package eda.segundotpparcial;
 
 public class Camino {
     
-    private Ciudad ciudad;
-    private int distancia; // en km
-    private int capacidad; // cantidad de carriles
+   private int distancia;
+    private int carriles;
 
-    public Camino(Ciudad ciudad, int distancia, int capacidad) {
-        this.ciudad = ciudad;
-        this.distancia = distancia;
-        this.capacidad = capacidad;
+    public Camino() {
+        this.distancia = 1000;
+        this.carriles = 1000;
     }
+
     
-    public Camino (int distancia){
-    this.distancia= distancia;
-    }
-
-    public Ciudad getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(Ciudad ciudad) {
-        this.ciudad = ciudad;
-    }
-
+    
     public int getDistancia() {
         return distancia;
     }
@@ -34,17 +22,17 @@ public class Camino {
         this.distancia = distancia;
     }
 
-    public int getCapacidad() {
-        return capacidad;
+    public int getCarriles() {
+        return carriles;
     }
 
-    public void setCapacidad(int capacidad) {
-        this.capacidad = capacidad;
+    public void setCarriles(int carriles) {
+        this.carriles = carriles;
     }
 
     @Override
     public String toString() {
-        return  "km=" + distancia  ;
+        return  distancia + " km" ;
     }
 
     

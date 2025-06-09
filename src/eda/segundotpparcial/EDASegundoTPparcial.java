@@ -1,7 +1,6 @@
 
 package eda.segundotpparcial;
 
-import java.util.ArrayList;
 
 
 public class EDASegundoTPparcial {
@@ -9,46 +8,27 @@ public class EDASegundoTPparcial {
     
     public static void main(String[] args) {
         
+        Grafo grafo = new Grafo(5, 4, false);
         
-         GrafoEtiquetado grafoEtiquetado = new GrafoEtiquetado(5, 4, false);
-        //0, 1, 2, 3
-        //La arista (v,w) donde v y w son vertices y v ---> w (es dirigido)  v=i w=j i=filas  j=columnas 
+        grafo.agregarArco(0, 1, 10, 2);
+        grafo.agregarArco(0, 2, 20, 3);
+        grafo.agregarArco(1, 2, 30, 2);
+        grafo.agregarArco(2, 3, 40, 4);
+        
+        grafo.mostrarMatriz();
+        
+        
+        int[] distancias = grafo.dijkstra(0); // desde el nodo 0
 
-        Ciudad moreno =new Ciudad("Moreno");
-        Ciudad moron =new Ciudad("Moron");
-        Ciudad beraz =new Ciudad("Berazategui");
-        Ciudad merlo =new Ciudad("Merlo");
-        
-//        ArrayList <Ciudad> saberCiudad=new ArrayList <Ciudad> ();
-//        
-//        saberCiudad.add(cityBuenosAires);
-//        saberCiudad.add(cityBuenosAires);
-//        saberCiudad.add(cityBuenosAires);
-//        saberCiudad.add(cityBuenosAires);
-        
-        
-        Camino camino= new Camino(12);
-        Camino camino2= new Camino(20);
-        Camino camino3= new Camino(70);
-        Camino camino4= new Camino(35);
-        
-        
-//        Camino camino2= new Camino(moron, 20, 2);
-//        Camino camino3= new Camino(beraz, 30, 2);
-//        Camino camino4= new Camino (merlo, 40, 2);
-        
-        
-        grafoEtiquetado.agregarArco(0, 1, camino);
-        grafoEtiquetado.agregarArco(0, 3, camino2);
-        grafoEtiquetado.agregarArco(1, 2, camino3);
-        grafoEtiquetado.agregarArco(3, 2, camino4);
-        
-        grafoEtiquetado.mostrarMatriz();
+        System.out.println("Distancias mínimas desde la ciudad 0:");
+        for (int i = 0; i < distancias.length; i++) {
+            System.out.println("0 → " + i + ": " + (distancias[i] >= 1000 ? "∞" : distancias[i] + " km"));
+        }
 
-        grafoEtiquetado.dijkstra2(2); // Desde ciudad 0 (A)
+        grafo.flujoMaximo(0);
         
-//         grafoEtiquetado.dijkstra(2);
-         
-    }
     
+    
+        
+    }
 }
