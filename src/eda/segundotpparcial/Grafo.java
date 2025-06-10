@@ -5,8 +5,7 @@ import java.util.ArrayList;
 
 public class Grafo {
     
- 
-     private Camino matriz[][];
+    private Camino matriz[][];
     private int maxVertices;
     private int numVertices;
     private boolean dirigido;
@@ -35,21 +34,16 @@ public class Grafo {
             for (int j = 0; j < maxVertices; j++) {
                 Camino camino=new Camino();
                 matriz[i][j]=camino;
-
             }
-
         }
         //aca en la diagonal pondremos en 0 los atributos
          for (int i = 0; i < maxVertices; i++) {
-
             for (int j = 0; j < maxVertices; j++) {
                 if(i==j){
                     matriz[i][j].setDistancia(0) ;
                     matriz[i][j].setCarriles(0);
-                }
-    
+                }   
             }
-
         }
 
         this.dirigido = dirigido;
@@ -152,47 +146,51 @@ public class Grafo {
         }
     }
     
-    public int[] dijkstra(int origen) {       
-    int[] dist = new int[numVertices];            // distancias mínimas
-    boolean[] visitado = new boolean[numVertices]; // vértices ya procesados
-
-    // Inicialización
-    for (int i = 0; i < numVertices; i++) {
-        dist[i] = matriz[origen][i].getDistancia(); // distancia directa
-        visitado[i] = false;
-    }
-
-    dist[origen] = 0; // distancia a sí mismo es 0
-    visitado[origen] = true;
-
-    for (int k = 1; k < numVertices; k++) {
-        int min = Integer.MAX_VALUE;
-        int v = -1;
-        // Encontrar el nodo no visitado con menor distancia
+      
+    
+    public int[] dijkstra(int origen) {      
+        int[] D = new int[numVertices];
+        ArrayList<Integer> T = new ArrayList<>();
+        
+        //en este for agrego a T todos las posiciones menos el origen 
         for (int i = 0; i < numVertices; i++) {
-            if (!visitado[i] && dist[i] < min) {
-                min = dist[i];
-                v = i;
+            D[i] = matriz[origen][i].getDistancia();
+            //veo si el valor i es distinto al origen para agregarlo a la lista T de los vertices a tratar 
+            if (i != origen) {
+                T.add(i); //agrego todos menos el indice origen
             }
         }
-
-        if (v == -1) break; // No hay más vértices accesibles
-        visitado[v] = true;
-
-        // Actualizar distancias
-        for (int i = 0; i < numVertices; i++) {
-            if (!visitado[i] && matriz[v][i].getDistancia() < 1000) {
-                if (dist[i] > dist[v] + matriz[v][i].getDistancia()) {
-                    dist[i] = dist[v] + matriz[v][i].getDistancia();
+       
+          D[origen] = 0;
+        
+        while (!T.isEmpty()) {
+            
+            int v = -1;
+            int distanciaMinima = Integer.MAX_VALUE; //la distancia minima empieza con un num grande 
+            //i itera 0,1,2,3 - T.size va a ser numdevertices - 1 
+            for (int i = 0; i < T.size(); i++) {
+                int var = T.get(i);  //guardo el el valor de i en var para luego asignarlo a v
+                if (D[var] < distanciaMinima) {
+                    distanciaMinima = D[var];
+                    v = var;
                 }
+            }  
+            
+            if(v == -1){
+                break;
             }
-        }
+            
+            T.remove((Integer) v); 
+
+            for(int i=0; i < T.size(); i++){
+                  int z = T.get(i);           
+                  if (D[z] > D[v] + matriz[v][z].getDistancia()) {
+                      D[z] = D[v] + matriz[v][z].getDistancia();                 
+                 } 
+              }
+        }           
+        return D;
     }
-    return dist;
-}
-    
-    
-    
     
     public void flujoMaximo(int origen) {
     int[] flujo = new int[numVertices];
@@ -254,6 +252,8 @@ public class Grafo {
         }
     }
 }
+    
+     
 
     
     
