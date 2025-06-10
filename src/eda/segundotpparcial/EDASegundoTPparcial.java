@@ -6,23 +6,12 @@ import java.util.Scanner;
 public class EDASegundoTPparcial {
 
     public static void main(String[] args) {
+        
+        Grafo grafo = new Grafo(10, 5, false);
 
-        Grafo grafo = new Grafo(6, 5, false);
 
-//        grafo.agregarArco(0, 1, 10, 2);
-//        grafo.agregarArco(0, 2, 20, 3);
-//        grafo.agregarArco(1, 2, 30, 2);
-//        grafo.agregarArco(2, 3, 40, 4);
-//        
-//        int[] distancias = grafo.dijkstra(0); // desde el nodo 0
         ArrayList<String> ciudades = new ArrayList();
-//
-//        System.out.println("Distancias mínimas desde la ciudad 0:");
-//        for (int i = 0; i < distancias.length; i++) {
-//            System.out.println("0 → " + i + ": " + (distancias[i] >= 1000 ? "∞" : distancias[i] + " km"));
-//        }
-//
-//        grafo.flujoMaximo(0);
+
 
         Scanner scanner = new Scanner(System.in);
         int opcion;
@@ -32,8 +21,8 @@ public class EDASegundoTPparcial {
             System.out.println("1. Creación automática");
             System.out.println("2. Ingreso de ciudades");
             System.out.println("3. Ingreso caminos");
-            System.out.println("4. Consultar costo entre dos ciudades (por carril o distancia)");
-            System.out.println("5. Consultar distancias entre ciudades");
+            System.out.println("4. Consultar costos entre dos ciudades (por carril y distancia)");
+            System.out.println("5. Consultar costos desde una ciudad al resto");
             System.out.println("0. Salir");
             System.out.print("Selecciona una opción: ");
 
@@ -48,6 +37,7 @@ public class EDASegundoTPparcial {
                     ciudades.add("Quines"); //3
                     ciudades.add("La Punta"); //4
                     
+                    
                     grafo.agregarArco(0, 1, 76, 2);
                     grafo.agregarArco(0, 2, 95, 2);
                     grafo.agregarArco(2, 4, 20, 3);
@@ -61,11 +51,20 @@ public class EDASegundoTPparcial {
                     scanner.nextLine(); // limpiar buffer
                     String ciudadNueva = scanner.nextLine();
                     ciudades.add(ciudadNueva);
+                
                     grafo.agregarVertice();
                     System.out.println("Ciudad registrada exitosamente.");
                     break;
 
                 case 3:
+                    
+                    System.out.println("Ciudades del grafo Actual");
+                    
+                    for (int i = 0; i < ciudades.size(); i++) {
+                        System.out.print(ciudades.get(i) + " indice : "+i +" | " );
+                    }
+                    
+                    System.out.println("");
                     System.out.println("Ingrese el índice de la ciudad origen:");
                     int origen = scanner.nextInt();
                     System.out.println("Ingrese el índice de la ciudad destino:");
@@ -84,46 +83,71 @@ public class EDASegundoTPparcial {
                     break;
 
                 case 4:
+                    
+                     System.out.println("Ciudades del grafo Actual");
+                    
+                    for (int i = 0; i < ciudades.size(); i++) {
+                        System.out.print(ciudades.get(i) + " indice : "+i +" | " );
+                    }
+                    
+                    System.out.println(" ");
+                    
                     System.out.println("Ingrese índice de la ciudad origen:");
                     int origenCosto = scanner.nextInt();
                     System.out.println("Ingrese índice de la ciudad destino:");
                     int destinoCosto = scanner.nextInt();
-                    Camino camino = grafo.comprobarArco(origenCosto, destinoCosto);
+                    int[] distanciasDijkstra1 = grafo.dijkstra(origenCosto);
+                   int[] distanciasFlujo = grafo.flujoMaximo(origenCosto);
+                    System.out.println("Costos Desde " + ciudades.get(origenCosto) + "  " + " hasta:  "+ ciudades.get(destinoCosto) );
+                     
+                      
+                        if (distanciasDijkstra1[destinoCosto] >= 1000 ||  distanciasFlujo[destinoCosto] ==0) {
+                            System.out.println("-> " + ciudades.get(destinoCosto) + ": Sin conexión ");
+                        } else {
+                            System.out.println("-> " + "Ruta mas corta " + ": " + distanciasDijkstra1[destinoCosto] + " km" + " - la ruta con mayor capacidad de flujo  "+distanciasFlujo[destinoCosto]+" carriles ");
+                        }
 
-                    if (camino.getDistancia() >= 1000) {
-                        System.out.println("No hay conexión entre las ciudades.");
-                    } else {
-                        System.out.println("de " + ciudades.get(origenCosto) + " a " + ciudades.get(destinoCosto) );
-                        System.out.println("Distancia: " + camino.getDistancia() + " km");
-                        System.out.println("Carriles: " + camino.getCarriles());
-                    }
                     break;
                     
 
                 case 5:
+                    
                     if (ciudades.size() < 2) {
                         System.out.println("Debe ingresar al menos dos ciudades para consultar distancias.");
                         break;
                     }
-
-                    System.out.println("Ingrese índice de la ciudad de origen:");
-                    int origenDistancia = scanner.nextInt();
-                    int[] distanciasDijkstra = grafo.dijkstra(origenDistancia);
-
-                    System.out.println("Distancias desde " + ciudades.get(origenDistancia) + ":");
                     
-  
+                       System.out.println("Ciudades del grafo Actual");
+                    
+                    for (int i = 0; i < ciudades.size(); i++) {
+                        System.out.print(ciudades.get(i) + " indice : "+i +" | " );
+                    }
+                    
+                    System.out.println(" ");
+                    
+                    System.out.println("Ingrese índice de la ciudad origen:");
+                    int origenCosto1 = scanner.nextInt();
+                   
+                   
+                  
+                    int[] distanciasDijkstra = grafo.dijkstra(origenCosto1);
+                   int[] distanciasFlujo1 = grafo.flujoMaximo(origenCosto1);
+                    System.out.println("Costos Desde " + ciudades.get(origenCosto1) );
+                     
+                      
                     for (int i = 0; i < distanciasDijkstra.length; i++) {
-                        if (i == origenDistancia) {
+                        if (i == origenCosto1) {
                             continue;
                         }
-                        if (distanciasDijkstra[i] >= 1000) {
-                            System.out.println("-> " + ciudades.get(i) + ": Sin conexión");
+                      if (distanciasDijkstra[i] >= 1000 ||  distanciasFlujo1[i] ==0) {
+                            System.out.println("-> " + ciudades.get(i) + ": Sin conexión ");
                         } else {
-                            System.out.println("-> " + ciudades.get(i) + ": " + distanciasDijkstra[i] + " km");
+                            System.out.println(ciudades.get(i) +"-> " + "Ruta mas corta " + ": " + distanciasDijkstra[i] + " km" + " - la ruta con mayor capacidad de flujo  "+distanciasFlujo1[i]+" carriles ");
                         }
-
+                    
                     }
+
+                  
                     break;
 
                 case 0:

@@ -49,6 +49,11 @@ public class Grafo {
         this.dirigido = dirigido;
     }
 
+    public void setNumVertices(int numVertices) {
+        this.numVertices = numVertices;
+    }
+
+    
     //Para agregar vertices si es posible
     public void agregarVertice() {
         if (numVertices == maxVertices) {
@@ -192,7 +197,7 @@ public class Grafo {
         return D;
     }
     
-    public void flujoMaximo(int origen) {
+    public int[] flujoMaximo(int origen) {
     int[] flujo = new int[numVertices];
     boolean[] visitado = new boolean[numVertices];
 
@@ -237,20 +242,22 @@ public class Grafo {
     }
 
     // Paso 4: Mostrar resultados
-    System.out.println("\nFlujo máximo (mínimo de carriles) desde ciudad " + origen + ":");
-   
-    for (int i = 0; i < numVertices; i++) {
-        if (flujo[i] == 0 && i != origen) {
-            System.out.println(origen + " -> " + i + ": Sin conexión");
-        } else {
-            if (i == origen) {
-    System.out.println(origen + " → " + i + ": - (mismo nodo)");
-            }else{
-                            System.out.println(origen + " -> " + i + ": " + flujo[i] + " carriles");
+//    System.out.println("\nFlujo máximo (mínimo de carriles) desde ciudad " + origen + ":");
+//   
+//    for (int i = 0; i < numVertices; i++) {
+//        if (flujo[i] == 0 && i != origen) {
+//            System.out.println(origen + " -> " + i + ": Sin conexión");
+//        } else {
+//            if (i == origen) {
+//    System.out.println(origen + " → " + i + ": - (mismo nodo)");
+//            }else{
+//                            System.out.println(origen + " -> " + i + ": " + flujo[i] + " carriles");
+//
+//            }
+//        }
+//    }
 
-            }
-        }
-    }
+    return flujo;
 }
     
      

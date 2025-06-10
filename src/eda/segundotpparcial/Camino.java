@@ -9,7 +9,7 @@ public class Camino {
 
     public Camino() {
         this.distancia = 1000;
-        this.carriles = 1000;
+        this.carriles =0;
     }
 
     
