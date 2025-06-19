@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class EDASegundoTPparcial {
 
     public static void main(String[] args) {
-        
+
         Grafo grafo = new Grafo(10, 5, false);
 
         ArrayList<String> ciudades = new ArrayList();
@@ -45,7 +45,7 @@ public class EDASegundoTPparcial {
 
                 case 2:
                     System.out.println("Ingrese el nombre de la ciudad:");
-                    scanner.nextLine(); // limpiar buffer
+                    scanner.nextLine();
                     String ciudadNueva = scanner.nextLine();
                     ciudades.add(ciudadNueva);
 
@@ -61,7 +61,7 @@ public class EDASegundoTPparcial {
                         System.out.print(ciudades.get(i) + " indice : " + i + " | ");
                     }
 
-                    System.out.println("");
+                    System.out.println("");    //ingreso de datos
                     System.out.println("Ingrese el índice de la ciudad origen:");
                     int origen = scanner.nextInt();
                     System.out.println("Ingrese el índice de la ciudad destino:");
@@ -81,6 +81,11 @@ public class EDASegundoTPparcial {
 
                 case 4:
 
+                    if (ciudades.size() < 2) {
+                        System.out.println("Debe ingresar al menos dos ciudades para consultar distancias.");
+                        break;
+                    }
+
                     System.out.println("Ciudades del grafo Actual");
 
                     for (int i = 0; i < ciudades.size(); i++) {
@@ -89,10 +94,11 @@ public class EDASegundoTPparcial {
 
                     System.out.println(" ");
 
-                    System.out.println("Ingrese índice de la ciudad origen:");
+                    System.out.println("Ingrese índice de la ciudad origen:");  //ingreso de datos
                     int origenCosto = scanner.nextInt();
                     System.out.println("Ingrese índice de la ciudad destino:");
                     int destinoCosto = scanner.nextInt();
+
                     int[] distanciasDijkstra1 = grafo.dijkstra(origenCosto);
                     int[] distanciasFlujo = grafo.flujoMaximo(origenCosto);
                     System.out.println("Costos Desde " + ciudades.get(origenCosto) + "  " + " hasta:  " + ciudades.get(destinoCosto));
@@ -120,7 +126,7 @@ public class EDASegundoTPparcial {
 
                     System.out.println(" ");
 
-                    System.out.println("Ingrese índice de la ciudad origen:");
+                    System.out.println("Ingrese índice de la ciudad origen:"); //ingreso de datos
                     int origenCosto1 = scanner.nextInt();
 
                     int[] distanciasDijkstra = grafo.dijkstra(origenCosto1);
